@@ -18,12 +18,12 @@ def hello():
 def welcome():
       response = VoiceResponse()
       with response.gather(
-        num_digits=1, language="en-IN", action=url_for('welcome',_scheme='http',_external=True), method="POST"
+        num_digits=1, voice="alice", language="en-IN", action=url_for('welcome',_scheme='http',_external=True), method="POST"
       ) as g:
-        g.say(message="Thanks for calling Vibconnect IVR Phone Home Service. " +
-              "Please press 1 for Table reservation." +
-              "Press 2 for your loyality point." +
-              "Press 2 for any other query.", loop=3)
+        g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
+              " Please press 1 for Table reservation." +
+              " Press 2 for your loyality point." +
+              " Press 2 for any other query.", loop=3)
         g.say(message="please press the correct number")
       return tiniyoml(response)
 
