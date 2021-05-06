@@ -14,20 +14,26 @@ app = Flask(__name__)
 def hello():
     return "HELLO WORLD to see the IVR DEMO go to https://ivr-python.herokuapp.com/welcome"
 
+# @app.route("/welcome", methods=['GET', 'POST'])
+# def welcome():
+#       response = VoiceResponse()
+#       with response.gather(
+#         num_digits=1, voice="alice", language="en-IN", action=url_for('welcomeCB',_scheme='http',_external=True), method="POST"
+         
+#       ) as g:
+#         g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
+#               " Please press 1 for Table reservation." +
+#               " Press 2 for your loyality point." +
+#               " Press 3 for any other query.", loop=3)
+        
+#       return vibconnect(response)
+
 @app.route("/welcome", methods=['GET', 'POST'])
-def welcome():
-      response = VoiceResponse()
-      with response.gather(
-        num_digits=1, voice="alice", language="en-IN", action=url_for('welcomeCB',_scheme='http',_external=True), method="POST"
-      ) as g:
-        g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
-              " Please press 1 for Table reservation." +
-              " Press 2 for your loyality point." +
-              " Press 3 for any other query.", loop=3)
-        # g.say(message="please press the correct number")
-      return vibconnect(response)
+def play():
 
-
+     response = VoiceResponse()
+     response.play("http://vibconnect.io/vibconnect/intro-vibtree.mp3",action=url_for('receptionCB',_scheme='http',_external=True), method="POST")
+     return vibconnect(response)
 
 @app.route("/test")
 def test():
@@ -131,8 +137,8 @@ def managerCB():
 @app.route('/ownerCB', methods=['GET','POST'])
 def ownerCB():
     response = VoiceResponse()
-    # response.dial(owner_number, timeout=30,action=url_for('ownerCB',_scheme='http',_external=True), method="POST")
-    response.say(message="thanks for calling owner")
+    response.dial(owner_number, timeout=30,action=url_for('ownerCB',_scheme='http',_external=True), method="POST")
+    # response.say(message="thanks for calling owner")
     return vibconnect(response)
 
     
