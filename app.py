@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "HELLO WORLD to see the IVR DEMO go to http://127.0.1:5000/welcome"
+    return "HELLO WORLD to see the IVR DEMO go to https://ivr-python.herokuapp.com/welcome"
 
 @app.route("/welcome", methods=['GET', 'POST'])
 def welcome():
