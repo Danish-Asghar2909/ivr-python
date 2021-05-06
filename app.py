@@ -3,7 +3,7 @@ from flask import (
     request,
     url_for
     )
-from helper import tiniyoml
+from helper import vibconnect
 from tiniyo.voice_response import VoiceResponse
 from config import *
 
@@ -23,15 +23,15 @@ def welcome():
         g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
               " Please press 1 for Table reservation." +
               " Press 2 for your loyality point." +
-              " Press 2 for any other query.", loop=3)
-        g.say(message="please press the correct number")
-      return tiniyoml(response)
+              " Press 3 for any other query.", loop=3)
+        # g.say(message="please press the correct number")
+      return vibconnect(response)
 
 @app.route("/test")
 def test():
     response = VoiceResponse()
     response.dial("917596035307")
-    return tiniyoml(response)
+    return vibconnect(response)
 
 
     
