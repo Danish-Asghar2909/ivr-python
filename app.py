@@ -24,7 +24,8 @@ def welcome():
         g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
               " Please press 1 for Table reservation." +
               " Press 2 for your loyality point." +
-              " Press 3 for any other query.")
+              " Press 3 for any other query."+
+              " Press 0 for listen again.")
         
       return vibconnect(response)
 
