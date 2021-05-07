@@ -52,7 +52,8 @@ def welcomeCB():
     app.logger.error("welcomeCB digit received = %s" % selected_option)
     option_actions = {'1': "tablebooking",
                       '2': "loyalitypoint",
-                      '3': "otherquery"
+                      '3': "otherquery",
+                      '0': "listenagain"
                     #   'null':"goBackToWelcome"
                       }
 
@@ -65,6 +66,9 @@ def welcomeCB():
             return vibconnect(response)
         elif int(selected_option) == 3:
             response = _forotherquery()
+            return vibconnect(response)
+        elif int(selected_option == 0):
+            response = _redirect_welcome()
             return vibconnect(response)
     else:
         return _redirect_welcome()
@@ -88,7 +92,7 @@ def _redirect_welcome():
     response.say(message="you entered a wrong input",action=url_for('welcomeCB',_scheme='http',_external=True), method='POST')
     
 
-    return vibconnect(response)
+    return response
 
 def _loyality_point(customer_number):
     response = VoiceResponse()
