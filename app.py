@@ -25,7 +25,8 @@ def welcome():
               " Please press 1 for Table reservation." +
               " Press 2 for your loyality point." +
               " Press 3 for any other query."+
-              " Press 0 for listen again.")
+              " Press 0 for listen again."+
+              "                          ")
         
       return vibconnect(response)
 
