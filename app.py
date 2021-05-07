@@ -14,26 +14,26 @@ app = Flask(__name__)
 def hello():
     return "HELLO WORLD to see the IVR DEMO go to https://ivr-python.herokuapp.com/welcome"
 
-# @app.route("/welcome", methods=['GET', 'POST'])
-# def welcome():
-#       response = VoiceResponse()
-#       with response.gather(
-#         num_digits=1, voice="alice", language="en-IN", action=url_for('welcomeCB',_scheme='http',_external=True), method="POST"
-         
-#       ) as g:
-#         g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
-#               " Please press 1 for Table reservation." +
-#               " Press 2 for your loyality point." +
-#               " Press 3 for any other query.", loop=3)
-        
-#       return vibconnect(response)
-
 @app.route("/welcome", methods=['GET', 'POST'])
-def play():
+def welcome():
+      response = VoiceResponse()
+      with response.gather(
+        num_digits=1, voice="alice", language="en-IN", action=url_for('welcomeCB',_scheme='http',_external=True), method="POST"
+         
+      ) as g:
+        g.say(message="Thanks for calling Vibconnect. IVR Phone Home Service. " +
+              " Please press 1 for Table reservation." +
+              " Press 2 for your loyality point." +
+              " Press 3 for any other query.")
+        
+      return vibconnect(response)
 
-     response = VoiceResponse()
-     response.play("http://vibconnect.io/vibconnect/intro-vibtree.mp3",action=url_for('receptionCB',_scheme='http',_external=True), method="POST")
-     return vibconnect(response)
+# @app.route("/welcome", methods=['GET', 'POST'])
+# def play():
+
+#      response = VoiceResponse()
+#      response.play("http://vibconnect.io/vibconnect/intro-vibtree.mp3",action=url_for('receptionCB',_scheme='http',_external=True), method="POST")
+#      return vibconnect(response)
 
 @app.route("/test")
 def test():
@@ -52,7 +52,9 @@ def welcomeCB():
     app.logger.error("welcomeCB digit received = %s" % selected_option)
     option_actions = {'1': "tablebooking",
                       '2': "loyalitypoint",
-                      '3': "otherquery"}
+                      '3': "otherquery"
+                    #   'null':"goBackToWelcome"
+                      }
 
     if selected_option in option_actions:
         if int(selected_option) == 1:
@@ -72,6 +74,7 @@ def _tablereservation():
     with response.gather(
         numDigits=1, action=url_for('reservation_day',_scheme='http',_external=True), method="POST"
     ) as g:
+
         g.say("Press 1 for today " +
               "Press 2 for tomorrow " +
               "To go back to the main menu " +
@@ -80,6 +83,12 @@ def _tablereservation():
 
     return response
 
+def _redirect_welcome():
+    response = VoiceResponse()
+    response.say(message="you entered a wrong input",action=url_for('welcomeCB',_scheme='http',_external=True), method='POST')
+    
+
+    return vibconnect(response)
 
 def _loyality_point(customer_number):
     response = VoiceResponse()
