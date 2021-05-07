@@ -26,7 +26,7 @@ def welcome():
               " Press 2 for your loyality point." +
               " Press 3 for any other query."+
               " Press 0 for listen again."+
-              "                          ",loop=0)
+              "                          ")
         
       return vibconnect(response)
 
