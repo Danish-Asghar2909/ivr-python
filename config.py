@@ -14,6 +14,7 @@ auth_secret = "TINIYO_AUTH_SECRET_ID"
 
 customer_key = "15657test"
 merchant_id = 15657
+customer_mobile = "918240182045"
 
 domain_prefix = "https://tiniyo.dev"
 
