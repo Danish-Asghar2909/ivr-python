@@ -6,6 +6,7 @@ from flask import (
 from helper import vibconnect
 from tiniyo.voice_response import VoiceResponse
 from config import *
+import requests
 
 app = Flask(__name__)
 
@@ -65,6 +66,7 @@ def welcomeCB():
             return vibconnect(response)
         elif int(selected_option) == 2:
             response = _loyality_point(request.json.get('From'))
+            # response = _loyality_point(request.json.get('8240182045'))
             return vibconnect(response)
         elif int(selected_option) == 3:
             response = _forotherquery()
@@ -99,8 +101,9 @@ def _loyality_point(customer_number):
 
     req_body = {'customer_key': customer_key, 'merchant_id': merchant_id, 'customer_mobile': customer_number}
     my_headers = {'x-api-key' : x_api_key,'Content-Type':'application/json','Accept':'application/json'}
-    custresp = request.get(customer_check_url,headers=my_headers,json=req_body)
-    if (response.status_code == 200):
+    custresp = requests.get(customer_check_url,headers=my_headers,json=req_body)
+    # if (response.status_code == 200): replace response with custresp after reading documentation
+    if (custresp.status_code == 200):
         response.say("Your loyality points are "+response.json().response.details.currentpoints,voice="alice", language="en-GB")
         # Code here will only run if the request is successful
     else:
